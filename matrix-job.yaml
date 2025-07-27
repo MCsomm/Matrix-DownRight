@@ -1,0 +1,22 @@
+    apiVersion: batch/v1
+    kind: Job
+    metadata:
+      name: matrix-job
+    spec:
+      template:
+        spec:
+          containers:
+            - name: matrix
+              image: matrix-solver
+              imagePullPolicy: Never
+              volumeMounts:
+                - name: matrix-volume
+                  mountPath: /app/matrix.txt
+                  subPath: matrix.txt
+          restartPolicy: Never
+          volumes:
+            - name: matrix-volume
+              configMap:
+                name: matrix-config
+      backoffLimit: 0
+    
